@@ -1,32 +1,33 @@
 function mergeSort(arr) {
-  if (arr.length > 1) {
-    newArr = arr.splice(0, arr.length / 2)
-    console.log(newArr, arr)
-    mergeSort(newArr)
-    mergeSort(arr)
-    merge(newArr, arr)
+  if (arr.length <= 1) return arr
+  else {
+    const num = (arr.length / 2)
+    const leftArray = arr.slice(0, num)
+    const rightArray = arr.slice(num, arr.length)
+    return merge(mergeSort(leftArray), mergeSort(rightArray))
   }
-
 }
 
-function merge(arrOne, arrTwo) {
-  let arrThree = [];
+function merge(leftArray, rightArray) {
+  let result = [];
   let i = 0;
   let j = 0;
-  let k = 0;
-  while (i < arrOne.length && j < arrTwo.length){
-    if (arrOne[i] < arrTwo[j])
-      arrThree[k++] = arrOne[i++]
+  
+  while (i < leftArray.length && j < rightArray.length) {
+    if (leftArray[i] <= rightArray[j])
+      result.push(leftArray[i++])
     else
-      arrThree[k++] = arrTwo[j++]
+      result.push(rightArray[j++])
   }
-  for (; i < arrOne.length; i++) {
-    arrThree[k++] = arrOne[i]
-  }
-  for (; j < arrTwo.length; j++) {
-    arrThree[k++] = arrTwo[j]
-  }
-  return arrThree
+  
+  while (i < leftArray.length) result.push(leftArray[i++])
+  
+  while (j < rightArray.length) result.push(rightArray[j++])
+  
+  return result
 }
 
-console.log(mergeSort([1,7,4,6,13,9,3,2]))
+const array = [1, 7, 4, 6, 13, 9, 3, 55, 22, 55, 9, 21, 4, 3, 99]
+
+console.log(array)
+console.log(mergeSort(array))
